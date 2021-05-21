@@ -1,5 +1,3 @@
 module.exports.home = function(req, res) {
-        return res.end("<h1> All Good < /
-
-        }
-        h1 > ");
+    return res.end("<h1>Welcom to ACF!!</h1>");
+}
