@@ -7,7 +7,6 @@ passport.use(new LocalStrategy({
     usernameField: 'email',
 }, (email, password, done) => {
     Users.findOne({ email: email }, (err, user) => {
-
         if (err) {
             console.log("Error in Passport");
             return;
@@ -29,4 +28,19 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+passport.chechAuthentication = function(req, res, next) {
+
+    if (req.isAuthenticated()) {
+        console.log("User authenticated");
+        return next();
+    }
+    return res.redirect("/");
+}
+
+passport.setAuthenticate = function(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.locals.user = req.user;
+    }
+    next();
+}
 module.export = passport;

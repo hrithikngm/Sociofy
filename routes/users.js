@@ -5,9 +5,11 @@ const passport = require('passport');
 const passport_local = require("../config/passport_local_storage");
 const user_Controller = require("../controller/userController");
 
+
+
 //console.log("hey there| you are on users page of routes ")
 
-router.get('/profile', user_Controller.profile);
+router.get('/profile', passport.chechAuthentication, user_Controller.profile);
 router.get('/', user_Controller.user);
 router.get('/sign-up', user_Controller.signUp);
 router.post('/create', user_Controller.create);

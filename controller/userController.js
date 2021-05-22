@@ -2,11 +2,10 @@ const User = require('../model/UsersSignUpSchema');
 
 
 module.exports.profile = function(req, res) {
-    console.log("Inside Profile", req.cookies);
-    if (req.cookies.user_id)
+    console.log(req.user);
+    if (req.user) {
         return res.render("profile");
-    else
-        return res.redirect('back');
+    }
 }
 
 module.exports.user = function(req, res) {

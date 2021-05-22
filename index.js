@@ -16,7 +16,6 @@ app.set('view engine', 'ejs');
 const db = require('./config/mongooose')
 
 
-
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -25,16 +24,15 @@ app.use(session({
     cookie: { maxAge: 60 * 60 * 1000 }
 }));
 
-//documentation padho
+//documentation padho passport
 app.use(passport.initialize());
 app.use(passport.session());
-// (passport);
+app.use(passport.setAuthenticate);
+
+//app ke routes passsport.intilaze ke baad krna 
 app.use('/', routes);
 
 
-
-
-//   app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 app.listen(8080, function(err) {
     if (err) {
         console.log("lauda ni chl rha");
