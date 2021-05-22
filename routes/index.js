@@ -7,6 +7,6 @@ console.log("you reached routes index page");
 
 router.get('/', homeController.home);
 
-router.get('/user', require('./users'));
+router.use('/user', require('./users'));
 
 module.exports = router;
