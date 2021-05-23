@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const Users = require("../model/UsersSignUpSchema");
+
 //authentication
 passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -28,7 +29,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-passport.chechAuthentication = function(req, res, next) {
+passport.checkAuthentication = function(req, res, next) {
 
     if (req.isAuthenticated()) {
         console.log("User authenticated");
@@ -43,4 +44,5 @@ passport.setAuthenticate = function(req, res, next) {
     }
     next();
 }
+
 module.export = passport;

@@ -33,6 +33,9 @@ app.use(passport.setAuthenticate);
 app.use('/', routes);
 
 
+
+
+
 app.listen(8080, function(err) {
     if (err) {
         console.log("lauda ni chl rha");

@@ -1,6 +1,5 @@
 const User = require('../model/UsersSignUpSchema');
 
-
 module.exports.profile = function(req, res) {
     console.log(req.user);
     if (req.user) {
@@ -11,6 +10,7 @@ module.exports.profile = function(req, res) {
 module.exports.user = function(req, res) {
     return res.end("<h1>  User</h1>");
 }
+
 module.exports.create = function(req, res) {
     User.create(req.body, function(err, newContact) {
         if (err) {
@@ -63,6 +63,8 @@ module.exports.signIn = function(req, res) {
 }
 
 module.exports.signout = function(req, res) {
+
+    req.logout();
     res.clearCookie('user_id');
     // res.cookie("user_id", req.cookies.user_id)
     return res.redirect('/');

@@ -5,8 +5,10 @@ const homeController = require("../controller/homeController");
 
 console.log("you reached routes index page");
 
-router.get('/', homeController.home);
 
+router.get('/', homeController.home);
 router.use('/user', require('./users'));
+router.use('/post', require('./post'));
+
 
 module.exports = router;
