@@ -1,4 +1,4 @@
-const User = require('../model/UsersSignUpSchema');
+const User = require('../model/SignUpSchema');
 
 module.exports.profile = function(req, res) {
     console.log(req.user);

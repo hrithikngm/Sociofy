@@ -26,8 +26,36 @@
                     <h3>
                         <%= post.user.name %>
                     </h3>
-                </p>
-                <%} %>
+                    <div>
+                        <form action="/comment/create" method="POST">
+                            <input type="text" name="content" placeholder="Type comment here..." required>
+                            <input type="hidden" name="post" value="<%=post._id%>">
+                            <input type="submit" value="Add Comment">
+                        </form>
+                    </div>
+                    <div>
+
+                        <% for(comment of post.comment) {%>
+                            <%console.log(comment) %>
+                                <p>
+                                    <h1>
+
+                                        <%= comment.content %>
+
+                                    </h1>
+                                    <p>
+                                        <%=comment.user.name %>
+                                    </p>
+
+
+                                    <%}%>
+
+                    </div>
+
+                    </p>
+                    <% } %>
+
+
 </body>
 
 </html>

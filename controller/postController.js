@@ -1,7 +1,7 @@
 const Post = require('../model/PostSchema');
 
 module.exports.create = function(req, res) {
-    console.log(req.user);
+    console.log(req.body);
     Post.create({
         content: req.body.newpost,
         user: req.user._id
