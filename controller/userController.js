@@ -5,6 +5,7 @@ module.exports.profile = function(req, res) {
     if (req.user) {
         return res.render("profile");
     }
+
 }
 
 module.exports.user = function(req, res) {
