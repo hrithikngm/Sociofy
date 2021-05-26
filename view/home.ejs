@@ -2,13 +2,17 @@
 <html lang="en">
 
 <head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 </head>
 
 <body>
     <h1>
         hello profile
     </h1>
+
+
+
     <% if(locals.user){ %>
         <form action="/post/create" method="POST">
             <textarea name="newpost" cols="20" rows="3" placeholder="type here ...." required></textarea>
@@ -88,6 +92,28 @@
                                     </ul>
                                 </div>
 
+                                <script>
+                                    <% if (locals.success && locals.success.length > 0) { %>
+                                    new Noty({
+                                        theme: 'relax',
+                                        text: "<%=success%>",
+                                        type: 'success',
+                                        layout: 'topRight',
+                                        timeout: 1500
+
+                                    }).show();
+                                    <% } %>
+                                    <% if (locals.error && locals.error.length > 0) { %>
+                                    new Noty({
+                                        theme: 'relax',
+                                        text: "<%=error%>",
+                                        type: 'error',
+                                        layout: 'topRight',
+                                        timeout: 1500
+
+                                    }).show();
+                                    <% } %>
+                                </script>
 
 </body>
 

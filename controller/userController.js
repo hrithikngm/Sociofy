@@ -57,7 +57,8 @@ module.exports.createSession = function(req, res) {
     //     }
 
     // });
-
+    req.flash('success', 'Logged In successfully');
+    // req.flash("success", "Logged In successfully!!");
     return res.redirect("/");
 
     // User.findOne({}, function(err, result) {
@@ -69,12 +70,14 @@ module.exports.createSession = function(req, res) {
 }
 
 module.exports.signIn = function(req, res) {
+    req.flash("success", "Logged in successfully!!");
     return res.render('../view/user_signin.ejs');
 }
 
 module.exports.signout = function(req, res) {
 
     req.logout();
+    req.flash("success", "Logged Out successfully!!");
     res.clearCookie('user_id');
     // res.cookie("user_id", req.cookies.user_id)
     return res.redirect('/');

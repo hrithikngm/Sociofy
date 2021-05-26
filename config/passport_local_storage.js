@@ -6,13 +6,15 @@ const Users = require("../model/SignUpSchema");
 //authentication
 passport.use(new LocalStrategy({
     usernameField: 'email',
-}, (email, password, done) => {
+    passReqToCallback: true
+}, (req, email, password, done) => {
     Users.findOne({ email: email }, (err, user) => {
         if (err) {
-            console.log("Error in Passport");
+            req.flash("error", "Invalid email/password");
             return;
         }
         if (!user || user.password != password) {
+            req.flash("error", "Invalid email/password");
             return done(null, false, { errors: { 'email or password': 'is invalid' } });
         }
         return done(null, user);
@@ -32,7 +34,7 @@ passport.deserializeUser(function(id, done) {
 passport.checkAuthentication = function(req, res, next) {
 
     if (req.isAuthenticated()) {
-        console.log("User authenticated");
+        // console.log("User authenticated");
         return next();
     }
     return res.redirect("/");
