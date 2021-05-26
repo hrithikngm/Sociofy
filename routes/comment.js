@@ -7,5 +7,6 @@ const passport_local = require("../config/passport_local_storage");
 const commentController = require('../controller/commentController');
 
 router.post('/create', passport.checkAuthentication, commentController.create);
+router.post("/delete", passport.checkAuthentication, commentController.delete);
 
 module.exports = router;

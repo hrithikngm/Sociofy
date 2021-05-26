@@ -1,5 +1,6 @@
 const Post = require('../model/PostSchema');
 const Comment = require('../model/CommentSchema');
+const User = require('../model/SignUpSchema');
 
 module.exports.home = function(req, res) {
 
@@ -23,9 +24,21 @@ module.exports.home = function(req, res) {
                 return;
             }
 
-            return res.render('home', {
-                post_list: posts
-            });
+            User.find({},
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    return res.render('home', {
+                        post_list: posts,
+                        all_friend: user
+                    });
+
+
+                })
+
+
 
         })
 }

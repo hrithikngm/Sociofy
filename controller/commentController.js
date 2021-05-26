@@ -32,3 +32,31 @@ module.exports.create = function(req, res) {
     //     });
     // })
 }
+module.exports.delete = function(req, res) {
+    let post_id;
+    Comment.findByIdAndDelete(req.body.comment_id, function(err, comment) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        post_id = comment.post;
+
+        Post.findById(post_id, function(err, post) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            // console.log(post);
+            let idx = post.comment.indexOf(req.body.comment_id);
+            // console.log(idx);
+
+            post.comment.splice(idx, 1);
+            post.save();
+            // console.log("after updating");
+            console.log(post);
+        })
+
+        console.log("Comment Deleted");
+    })
+    return res.redirect("back");
+}

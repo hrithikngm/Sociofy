@@ -10,10 +10,25 @@
 
 <body>
     <h1>Profile Page</h1>
+    <h2>Welcome
+        <%=all_user.name%>
+    </h2>
+    <% if(locals.user && locals.user.id==all_user.id){%>
 
-    <a href="/user/signout">
-        <button>Signout</button>
-    </a>
+        <a href="/user/signout">
+            <button>Signout</button>
+        </a>
+
+        <form action="/user/updateprofile" method="POST">
+            <input type="text" name="email" value="<%=all_user.email%>">
+            <input type="text" name="name" value="<%= all_user.name%>">
+            <button type="submit">updateprofile</button>
+        </form>
+
+        <%}%>
+
+
+
 
 </body>
 

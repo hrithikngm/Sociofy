@@ -59,14 +59,34 @@
                                         <p>
                                             <%=comment.user.name %>
                                         </p>
+                                        <% if(locals.user && locals.user.id == comment.user.id) {%>
+                                            <form action="/comment/delete" method="POST">
+                                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                                <input type="submit" value="Delete">
+                                            </form>
+                                            <%}%>
 
-
-                                        <%}%>
+                                                <%}%>
 
                             </div>
 
                             </p>
                             <% } %>
+                                <div>
+                                    <h1>List of Friends</h1>
+                                    <ul>
+                                        <% for(user of all_friend) {%>
+                                            <li>
+                                                <a href="/user/profile/<%=user.id%>">
+                                                    <%= user.name %>
+                                                </a>
+
+                                            </li>
+
+
+                                            <%}%>
+                                    </ul>
+                                </div>
 
 
 </body>

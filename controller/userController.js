@@ -2,9 +2,18 @@ const User = require('../model/SignUpSchema');
 
 module.exports.profile = function(req, res) {
     console.log(req.user);
-    if (req.user) {
-        return res.render("profile");
-    }
+    // if (req.user) {
+    // return res.render("profile");
+    // }
+    User.findById(req.params.id, function(err, user) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        return res.render("profile", {
+            all_user: user
+        });
+    })
 
 }
 
@@ -73,4 +82,27 @@ module.exports.signout = function(req, res) {
 
 module.exports.signUp = function(req, res) {
     return res.render("user_signup");
+}
+
+module.exports.update = function(req, res) {
+    User.findById(req.user.id, function(err, ans) {
+
+        if (err) {
+            console.log("error in updating profile", err);
+            return;
+        }
+
+        ans.name = req.body.name;
+        ans.email = req.body.email;
+
+        ans.save(function(err, user) {
+            if (err) {
+                console.log("not updated");
+                return;
+            }
+            return res.redirect('back')
+        });
+
+    })
+
 }

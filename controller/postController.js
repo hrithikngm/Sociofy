@@ -1,5 +1,5 @@
 const Post = require('../model/PostSchema');
-
+const Comment = require("../model/CommentSchema");
 module.exports.create = function(req, res) {
     console.log(req.body);
     Post.create({
@@ -19,9 +19,16 @@ module.exports.delete = function(req, res) {
 
     Post.findByIdAndDelete(req.body.post_id, function(err) {
 
+
         if (err) console.log(err);
 
-        console.log("Successful deletion");
+        Comment.deleteMany({ post: req.body.post_id }).then(function() {
+            console.log("Data deleted"); // Success
+        }).catch(function(error) {
+            console.log(error); // Failure
+        });
+
+        // console.log("Successful deletion");
 
         return res.redirect('back');
     })
