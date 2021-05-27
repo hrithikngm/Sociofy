@@ -1,18 +1,26 @@
 const Post = require('../model/PostSchema');
 const Comment = require("../model/CommentSchema");
-module.exports.create = function(req, res) {
+module.exports.create = async function(req, res) {
     console.log(req.body);
-    Post.create({
-        content: req.body.newpost,
-        user: req.user.id
-    }, function(err, newPost) {
-        if (err) {
-            console.log("Error in db");
-            return;
+    try {
+        let post = await Post.create({
+            content: req.body.newpost,
+            user: req.user.id
+        });
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post Created"
+            })
         }
-        console.log("****", newPost);
-    })
-    return res.redirect("back");
+        return res.redirect("back");
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+
 }
 
 module.exports.delete = function(req, res) {

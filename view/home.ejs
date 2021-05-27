@@ -4,6 +4,8 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script async defer src="/postCreate.js"></script> -->
 </head>
 
 <body>
@@ -12,108 +14,107 @@
     </h1>
 
 
-
     <% if(locals.user){ %>
-        <form action="/post/create" method="POST">
+        <form id="post_create" action="/post/create" method="POST">
             <textarea name="newpost" cols="20" rows="3" placeholder="type here ...." required></textarea>
             <br>
             <input type="submit" value="Post">
         </form>
         <% } %>
+            <div id="post-list-container">
+                <% for(post of post_list) {%>
+                    <p>
+                        <h1>
+                            <%= post.content %>
 
-            <% for(post of post_list) {%>
-
-                <p>
-                    <h1>
-                        <%= post.content %>
-
-                    </h1>
-                    <h3>
-                        <%= post.user.name %>
-                    </h3>
-
-
-
-                    <% if(locals.user && locals.user.id == post.user.id) {%>
-                        <form action="/post/delete" method="POST">
-                            <input type="hidden" name="post_id" value="<%= post.id %>">
-                            <input type="submit" value="Delete">
-                        </form>
-                        <%}%>
+                        </h1>
+                        <h3>
+                            <%= post.user.name %>
+                        </h3>
 
 
 
-                            <div>
-                                <form action="/comment/create" method="POST">
-                                    <input type="text" name="content" placeholder="Type comment here..." required>
-                                    <input type="hidden" name="post" value="<%=post.id%>">
-                                    <input type="submit" value="Add Comment">
-                                </form>
+                        <% if(locals.user && locals.user.id == post.user.id) {%>
+                            <form action="/post/delete" method="POST">
+                                <input type="hidden" name="post_id" value="<%= post.id %>">
+                                <input type="submit" value="Delete">
+                            </form>
+                            <%}%>
 
-                            </div>
-                            <div>
 
-                                <% for(comment of post.comment) {%>
-                                    <p>
-                                        <h1>
 
-                                            <%= comment.content %>
-
-                                        </h1>
-                                        <p>
-                                            <%=comment.user.name %>
-                                        </p>
-                                        <% if(locals.user && locals.user.id == comment.user.id) {%>
-                                            <form action="/comment/delete" method="POST">
-                                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
-                                                <input type="submit" value="Delete">
-                                            </form>
-                                            <%}%>
-
-                                                <%}%>
-
-                            </div>
-
-                            </p>
-                            <% } %>
                                 <div>
-                                    <h1>List of Friends</h1>
-                                    <ul>
-                                        <% for(user of all_friend) {%>
-                                            <li>
-                                                <a href="/user/profile/<%=user.id%>">
-                                                    <%= user.name %>
-                                                </a>
+                                    <form action="/comment/create" method="POST">
+                                        <input type="text" name="content" placeholder="Type comment here..." required>
+                                        <input type="hidden" name="post" value="<%=post.id%>">
+                                        <input type="submit" value="Add Comment">
+                                    </form>
 
-                                            </li>
+                                </div>
+                                <div>
 
+                                    <% for(comment of post.comment) {%>
+                                        <p>
+                                            <h1>
 
-                                            <%}%>
-                                    </ul>
+                                                <%= comment.content %>
+
+                                            </h1>
+                                            <p>
+                                                <%=comment.user.name %>
+                                            </p>
+                                            <% if(locals.user && locals.user.id == comment.user.id) {%>
+                                                <form action="/comment/delete" method="POST">
+                                                    <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                                    <input type="submit" value="Delete">
+                                                </form>
+                                                <%}%>
+                                        </p>
+                                        <%}%>
+
                                 </div>
 
-                                <script>
-                                    <% if (locals.success && locals.success.length > 0) { %>
-                                    new Noty({
-                                        theme: 'relax',
-                                        text: "<%=success%>",
-                                        type: 'success',
-                                        layout: 'topRight',
-                                        timeout: 1500
+                    </p>
+                    <% } %>
+            </div>
+            <div>
+                <h1>List of Friends</h1>
+                <ul>
+                    <% for(user of all_friend) {%>
+                        <li>
+                            <a href="/user/profile/<%=user.id%>">
+                                <%= user.name %>
+                            </a>
 
-                                    }).show();
-                                    <% } %>
-                                    <% if (locals.error && locals.error.length > 0) { %>
-                                    new Noty({
-                                        theme: 'relax',
-                                        text: "<%=error%>",
-                                        type: 'error',
-                                        layout: 'topRight',
-                                        timeout: 1500
+                        </li>
 
-                                    }).show();
-                                    <% } %>
-                                </script>
+
+                        <%}%>
+                </ul>
+            </div>
+
+            <script>
+                <% if (locals.success && locals.success.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: "<%=success%>",
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 1500
+
+                }).show();
+                <% } %>
+                <% if (locals.error && locals.error.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: "<%=error%>",
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 1500
+
+                }).show();
+                <% } %>
+            </script>
 
 </body>
 

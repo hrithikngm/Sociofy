@@ -13,9 +13,11 @@ const routes = require("./routes");
 app.use(cookieParser());
 app.use(express.urlencoded());
 
+app.use(express.static("assets")); //abb asset file use kr sakte haii;
+
 app.set('views', './view');
 app.set('view engine', 'ejs');
-const db = require('./config/mongooose')
+const db = require('./config/mongooose');
 
 
 app.use(session({
@@ -25,10 +27,6 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 60 * 60 * 1000 }
 }));
-
-
-
-
 
 
 
