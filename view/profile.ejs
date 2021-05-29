@@ -13,15 +13,17 @@
     <h2>Welcome
         <%=all_user.name%>
     </h2>
+    <img src="<%=all_user.avatar%>" alt="user.name">
     <% if(locals.user && locals.user.id==all_user.id){%>
 
         <a href="/user/signout">
             <button>Signout</button>
         </a>
 
-        <form action="/user/updateprofile" method="POST">
+        <form action="/user/updateprofile" method="POST" enctype="multipart/form-data">
             <input type="text" name="email" value="<%=all_user.email%>">
             <input type="text" name="name" value="<%= all_user.name%>">
+            <input type="file" name="avatar">
             <button type="submit">updateprofile</button>
         </form>
 

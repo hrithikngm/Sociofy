@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.urlencoded());
 
 app.use(express.static("assets")); //abb asset file use kr sakte haii;
-
+app.use("/upload", express.static("upload"));
 app.set('views', './view');
 app.set('view engine', 'ejs');
 const db = require('./config/mongooose');
@@ -34,6 +34,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticate);
+
 app.use(flash());
 app.use(function(req, res, next) {
     res.locals.success = req.flash('success');

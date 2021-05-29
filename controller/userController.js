@@ -1,4 +1,7 @@
 const User = require('../model/SignUpSchema');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
 
 module.exports.profile = function(req, res) {
     console.log(req.user);
@@ -87,25 +90,43 @@ module.exports.signUp = function(req, res) {
     return res.render("user_signup");
 }
 
-module.exports.update = function(req, res) {
-    User.findById(req.user.id, function(err, ans) {
+module.exports.update = async function(req, res) {
+    // console.log(req.body);
+    try {
 
-        if (err) {
-            console.log("error in updating profile", err);
-            return;
-        }
+        let ans = await User.findById(req.user.id);
 
-        ans.name = req.body.name;
-        ans.email = req.body.email;
-
-        ans.save(function(err, user) {
+        console.log(".....................", User.uploadAvatar);
+        User.uploadAvatar(req, res, function(err) {
             if (err) {
-                console.log("not updated");
-                return;
+                console.log(err);
             }
-            return res.redirect('back')
-        });
+            if (req.file) {
+                // newItem.img.data = fs.readFileSync(req.files.userPhoto.path)
+                // newItem.img.contentType = ‘image/png’;
 
-    })
+                ans.avatar = User.uploadpath + "/" + req.file.filename;
+            }
+
+            ans.name = req.body.name;
+            ans.email = req.body.email;
+            console.log(ans);
+            ans.save();
+            return res.redirect('back');
+        })
+
+
+
+
+
+
+
+
+
+    } catch (err) {
+        console.log("Error in multer", err);
+        return res.redirect("back");
+    }
+
 
 }

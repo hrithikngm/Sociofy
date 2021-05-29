@@ -36,8 +36,6 @@
 //     // });
 // }();
 
-
-
 $("#post_create").submit(function(e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.

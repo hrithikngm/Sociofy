@@ -1,4 +1,5 @@
 const Comment = require('../model/CommentSchema');
+const { findById } = require('../model/PostSchema');
 const Post = require('../model/PostSchema');
 
 module.exports.create = function(req, res) {

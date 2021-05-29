@@ -47,4 +47,4 @@ passport.setAuthenticate = function(req, res, next) {
     next();
 }
 
-module.export = passport;
+module.exports = passport;
