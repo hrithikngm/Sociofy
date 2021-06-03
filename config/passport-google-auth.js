@@ -2,7 +2,7 @@ const passport = require('passport');
 const crypto = require('crypto');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../model/SignUpSchema');
-const keys = require('./keys');
+const keys = require('./datakeys');
 
 passport.use(new GoogleStrategy({
         clientID: keys.clientID,
