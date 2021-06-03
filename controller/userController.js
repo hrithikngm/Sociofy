@@ -2,6 +2,8 @@ const User = require('../model/SignUpSchema');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const nodemailer = require('nodemailer');
+const transporter = require('../config/node-mailer');
 
 module.exports.profile = function(req, res) {
     console.log(req.user);
@@ -25,12 +27,30 @@ module.exports.user = function(req, res) {
 }
 
 module.exports.create = function(req, res) {
-    User.create(req.body, function(err, newContact) {
+    console.log("hello on conifg file maile", transporter);
+    User.create(req.body, async function(err, newContact) {
         if (err) {
             console.log("Error in db");
             return;
         }
         console.log("****", newContact);
+
+        transporter.transporter.sendMail({
+            from: "acfsociofy@gmail.com", // sender address
+            to: newContact.email, // list of receivers
+            subject: "Hello ACF", // Subject line
+            text: "Hello world?", // plain text body
+            html: "<b>SignUp Successfully!!</b>", // html body
+        }, function(err, info) {
+            if (err) {
+                console.log("error in sending mail", err);
+                return;
+            }
+            console.log(info);
+        });
+
+
+
     })
     return res.redirect("back");
 }

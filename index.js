@@ -5,6 +5,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const localpassort = require('./config/passport_local_storage');
 const Noty = require('noty');
+const googleauth = require('./config/passport-google-auth');
 
 const app = express();
 
