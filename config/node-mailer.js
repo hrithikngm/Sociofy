@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const ejs = require('ejs');
 const path = require('path')
+const keys = require('./keys');
 
 
 
@@ -18,8 +19,8 @@ module.exports.transporter = nodemailer.createTransport({
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: "acfsociofy@gmail.com",
-        pass: "@69acfsociofy" // generated ethereal password
+        user: keys.user,
+        pass: keys.pass // generated ethereal password
     },
 });
 
