@@ -9,7 +9,7 @@ module.exports.toggle = async function(req, res) {
         if (req.params.type == 'PostModel') {
             likeable = await Post.findById(req.params.id).populate('like');
         } else {
-            likeable = await Comment.findByID(req.params.id).populate('like');
+            likeable = await Comment.findById(req.params.id).populate('like');
         }
 
         // console.log("helllllll");

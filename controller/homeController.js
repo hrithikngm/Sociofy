@@ -14,11 +14,11 @@ module.exports.home = async function(req, res) {
                 populate: {
                     path: 'user'
                 },
+                populate: {
+                    path: 'like'
+                }
 
-            }).populate({
-                path: 'like',
-                populate: { path: 'user' }
-            });
+            }).populate('like');
 
         console.log("populated post of home.ejs ", post);
 

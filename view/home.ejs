@@ -32,7 +32,7 @@
                         <h1>
                             <%= post.content %>
 
-                                <% if((locals.user) && (post.like.findIndex(x=> x.user.id == locals.user.id) != -1) ){ %>
+                                <% if((locals.user) && (post.like.findIndex(x=> x.user == locals.user.id) != -1) ){ %>
                                     <a href="/like/toggle/<%=post.id%>/PostModel"><i class="fas fa-heart"></i></a>
                                     <%=post.like.length%>
                                         <% }else if(locals.user){ %>
@@ -67,29 +67,38 @@
                                                                     <div>
 
                                                                         <% for(comment of post.comment) {%>
-                                                                            <%console.log("comment populated",comment)%>
+                                                                            <p>
+                                                                                <h1>
+
+                                                                                    <%= comment.content %>
+
+                                                                                </h1>
                                                                                 <p>
-                                                                                    <h1>
-
-                                                                                        <%= comment.content %>
-
-                                                                                    </h1>
-                                                                                    <p>
-                                                                                        <%=comment.user.name %>
-                                                                                    </p>
-
-                                                                                    <h3>
-                                                                                        <%= post.user.name %>
-                                                                                    </h3>
-
-                                                                                    <% if(locals.user && locals.user.id == comment.user.id) {%>
-                                                                                        <form action="/comment/delete" method="POST">
-                                                                                            <input type="hidden" name="comment_id" value="<%= comment.id %>">
-                                                                                            <input type="submit" value="Delete">
-                                                                                        </form>
-                                                                                        <%}%>
+                                                                                    <%=comment.user.name %>
                                                                                 </p>
-                                                                                <%}%>
+
+                                                                                <% if((locals.user) && (comment.like.findIndex(x=> x.user == locals.user.id) != -1) ){ %>
+                                                                                    <a href="/like/toggle/<%=comment.id%>/CommentModel"><i class="fas fa-heart"></i></a>
+                                                                                    <%=comment.like.length%>
+                                                                                        <% }else if(locals.user){ %>
+                                                                                            <a href="/like/toggle/<%=comment.id%>/CommentModel"><i class="far fa-heart"></i></a>
+                                                                                            <%=comment.like.length%>
+                                                                                                <% }else{ %>
+                                                                                                    <i class="far fa-heart"></i>
+                                                                                                    <%=comment.like.length%>
+                                                                                                        <% } %>
+
+
+
+
+                                                                                                            <% if(locals.user && locals.user.id == comment.user.id) {%>
+                                                                                                                <form action="/comment/delete" method="POST">
+                                                                                                                    <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                                                                                                    <input type="submit" value="Delete">
+                                                                                                                </form>
+                                                                                                                <%}%>
+                                                                            </p>
+                                                                            <%}%>
 
                                                                     </div>
 
