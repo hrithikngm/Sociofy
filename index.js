@@ -43,10 +43,9 @@ app.use(function(req, res, next) {
     next();
 });
 
+
 //app ke routes passsport.intilaze ke baad krna 
 app.use('/', routes);
-
-
 
 
 

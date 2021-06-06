@@ -1,14 +1,27 @@
 const Post = require('../model/PostSchema');
 const Comment = require('../model/CommentSchema');
 const User = require('../model/SignUpSchema');
+const { populate } = require('../model/PostSchema');
+const Like = require('../model/LikeSchema');
 
 module.exports.home = async function(req, res) {
 
     try {
-        let post = await Post.find({}).populate('user').populate({
-            path: 'comment',
-            populate: { path: 'user' }
-        });
+        let post = await Post.find({})
+            .populate('user')
+            .populate({
+                path: 'comment',
+                populate: {
+                    path: 'user'
+                },
+
+            }).populate({
+                path: 'like',
+                populate: { path: 'user' }
+            });
+
+        console.log("populated post of home.ejs ", post);
+
 
 
         let user_async = await User.find({});
@@ -16,6 +29,7 @@ module.exports.home = async function(req, res) {
         return res.render('home', {
             post_list: post,
             all_friend: user_async
+
         });
 
     } catch (error) {
@@ -23,32 +37,3 @@ module.exports.home = async function(req, res) {
         return;
     }
 }
-
-
-
-// Post.find({}).populate('user')
-//     .populate({
-//         path: 'comment',
-//         populate: { path: 'user' }
-//     })
-//     .exec(function(err, posts) {
-//         if (err) {
-//             console.log("error");
-//             return;
-//         }
-
-//         User.find({},
-//             function(err, user) {
-//                 if (err) {
-//                     console.log(err);
-//                     return;
-//                 }
-//                 return res.render('home', {
-//                     post_list: posts,
-//                     all_friend: user
-//                 });
-
-
-//             })
-
-//     })

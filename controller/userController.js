@@ -4,6 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const transporter = require('../config/node-mailer');
+const crypto = require("crypto");
 
 module.exports.profile = function(req, res) {
     console.log(req.user);
@@ -149,4 +150,37 @@ module.exports.update = async function(req, res) {
     }
 
 
+}
+
+module.exports.forgotpass = async function(req, res) {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+
+    let password = crypto.randomBytes(20).toString('hex')
+    user.password = password
+    user.save();
+
+    transporter.transporter.sendMail({
+        from: "acfsociofy@gmail.com", // sender address
+        to: user.email, // list of receivers
+        subject: "Reset Password", // Subject line
+        text: "Hello world?", // plain text body
+        html: `<h1>Here Your random generated password!!</h1>:<b>${password}this is onetime password you can change your password in upafte profile section`, // html body
+    }, function(err, info) {
+        if (err) {
+            console.log("error in sending mail", err);
+            return;
+        }
+        console.log(info);
+    });
+    return res.redirect("/user/sign-in");
+
+
+    // let token = await Token.findOne({ userId: user._id });
+    // if (token) {
+    //     await token.deleteOne()
+    // };
 }

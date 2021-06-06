@@ -34,4 +34,8 @@ router.get('/auth/google/callback',
         failureRedirect: '/auth/google/failure'
     }), user_Controller.createSession);
 
+
+router.post('/forgotpass', user_Controller.forgotpass);
+
+
 module.exports = router;

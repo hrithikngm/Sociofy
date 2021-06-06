@@ -12,7 +12,13 @@ var postSchema = new mongoose.Schema({
     comment: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CommentModel'
+    }],
+    like: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'LikeModel'
     }]
+
+
 });
 
 var PostModel = mongoose.model("PostModel", postSchema);

@@ -17,20 +17,25 @@
         <input type="password" name="password" placeholder="Password" required>
         <input type="Submit" value="Submit">
     </form>
+    <h1>Haii Eat Almonds to rember password or use me</h1>
+    <form action="/user/forgotpass" method="POST">
+        <input type="email" name="email" required>
+        <input type="submit" value="Generate Password" placeholder="your Email">
+    </form>
 
     <a href="/user/auth/google">Sign In with Google</a>
 
     <script>
-        <% if (locals.error && locals.error.length > 0) { %>
-        new Noty({
-            theme: 'relax',
-            text: "<%=error%>",
-            type: 'error',
-            layout: 'topRight',
-            timeout: 1500
+        if (locals.error && locals.error.length > 0) {
+            new Noty({
+                theme: 'relax',
+                text: "<%=error%>",
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
 
-        }).show();
-        <% } %>
+            }).show();
+        }
     </script>
 
 </body>
