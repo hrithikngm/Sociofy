@@ -26,6 +26,7 @@ module.exports.home = async function(req, res) {
 
         let user_async = await User.find({});
 
+
         return res.render('home', {
             post_list: post,
             all_friend: user_async

@@ -6,6 +6,9 @@ const passport = require("passport");
 const localpassort = require('./config/passport_local_storage');
 const Noty = require('noty');
 const googleauth = require('./config/passport-google-auth');
+const socketio = require('socket.io');
+const sockets = require('./config/chat_sockets');
+
 
 const app = express();
 
@@ -28,6 +31,16 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 60 * 60 * 1000 }
 }));
+
+//socket.io
+const http = require('http').Server(app);
+sockets.chatSockets(http)
+http.listen(3000, function() {
+    console.log('listening on *:3000');
+});
+
+
+
 
 
 

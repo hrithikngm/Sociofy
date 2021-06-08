@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/messagebox.css">
 
 
 </head>
@@ -56,7 +57,7 @@
 
 
 
-                                                                    <div>
+                                                                    <div class="addcomment">
                                                                         <form action="/comment/create" method="POST">
                                                                             <input type="text" name="content" placeholder="Type comment here..." required>
                                                                             <input type="hidden" name="post" value="<%=post.id%>">
@@ -109,19 +110,84 @@
                 <h1>List of Friends</h1>
                 <ul>
                     <% for(user of all_friend) {%>
+
                         <li>
                             <a href="/user/profile/<%=user.id%>">
                                 <%= user.name %>
                             </a>
-
                         </li>
-
-
                         <%}%>
                 </ul>
             </div>
 
+            <!--It's just a concept, a chat UI design for direct messaging!
+Enjoy! :) Don't forget to click the heart if you like it! -->
+            <div class="chatbox__container" id="chat_toggle">
+                <button onclick="myFunction()">Chat box</button>
+            </div>
+            <div class="container" id="chat_container">
+                <div class="chatbox">
+                    <div class="top-bar">
+                        <div class="avatar">
+                            <p>V</p>
+                        </div>
+                        <div class="name">Sociofy</div>
+                        <div class="icons">
+                            <i class="fas fa-phone"></i>
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="menu" onclick="closefunction()">
+                            <div class="dots">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="middle">
+                        <div class="voldemort">
+                            <div class="incoming">
+                                <div class="bubble">Hey, Father's Day is coming up..</div>
+                                <div class="bubble">What are you getting.. Oh, oops sorry dude.</div>
+                            </div>
+                            <div class="outgoing">
+                                <div class="bubble lower">Nah, it's cool.</div>
+                                <div class="bubble">Well you should get your Dad a cologne. Here smell it. Oh wait! ...</div>
+                            </div>
+                            <div class="typing">
+                                <div class="bubble">
+                                    <div class="ellipsis one"></div>
+                                    <div class="ellipsis two"></div>
+                                    <div class="ellipsis three"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-bar">
+                        <div class="chat">
+                            <input class="chatInput" type="text" placeholder="Type a message..." />
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
             <script>
+                function myFunction() {
+                    var element = document.getElementById("chat_container");
+                    document.getElementById('chat_toggle').style.display = "none";
+                    element.style.display = "block";
+                    // element.classList.toggle("mystyle");
+                }
+
+                function closefunction() {
+                    var element = document.getElementById("chat_container");
+
+                    element.style.display = "none";
+                    document.getElementById('chat_toggle').style.display = "block";
+                    // element.classList.toggle("mystyle");
+                }
                 if (locals.success && locals.success.length > 0) {
                     new Noty({
                         theme: 'relax',
@@ -143,6 +209,9 @@
                     }).show();
                 }
             </script>
+
+
+
 
 </body>
 
